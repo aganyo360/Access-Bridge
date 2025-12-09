@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Accessible Services Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Accessible Services Map</h1>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    const map = L.map('map').setView([-1.286389, 36.817223], 12);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    fetch('/api/services/')
+        .then(res => res.json())
+        .then(data => {
+
+            console.log("SERVICES RECEIVED:", data);   // <--- See if API returns anything
+
+            data.forEach(service => {
+
+                console.log("Adding marker:", service.name, service.latitude, service.longitude); // <--- DEBUG
+
+                let lat = service.latitude;
+                let lng = service.longitude;
+
+                // fallback center for Kenya
+                if (!lat || !lng) {
+                    lat = -1.286389;
+                    lng = 36.817223;
+                    console.warn("Missing coordinates for:", service.name);
+                }
+
+                const marker = L.marker([lat, lng]).addTo(map);
+                marker.bindPopup(`<b>${service.name}</b><br>
+    ${service.accessibility}<br>
+    <a href="/service/${service.id}/">View Details</a>
+`);
+
+            });
+        })
+        .catch(err => console.error("API ERROR:", err));
+</script>
+
+</body>
+
+</html>

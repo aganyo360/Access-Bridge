@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AccessBridge - {% block title %}{% endblock %}</title>
+
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+        }
+
+        header {
+            padding: 15px 50px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c7be5;
+        }
+
+        nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">AccessBridge</div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/services/">Services</a>
+        <a href="/organizations/">Organizations</a>
+        {% if user.is_authenticated %}
+            <a href="/logout/">Logout</a>
+        {% else %}
+            <a href="/login/">Login</a>
+            <a href="/register/">Register</a>
+        {% endif %}
+    </nav>
+</header>
+
+<div>
+    {% block content %}
+    {% endblock %}
+</div>
+
+</body>
+</html>

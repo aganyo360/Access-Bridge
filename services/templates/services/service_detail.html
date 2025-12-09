@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Service Details</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 300px;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+        }
+        .card {
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2 id="serviceName"></h2>
+
+    <div class="card">
+        <p><b>Description:</b> <span id="serviceDescription"></span></p>
+        <p><b>City:</b> <span id="serviceCity"></span></p>
+        <p><b>Accessibility:</b> <span id="serviceAccess"></span></p>
+        <p><b>Organization:</b> <span id="serviceOrg"></span></p>
+
+        <a id="directionBtn" href="#" target="_blank">
+            <button>Get Directions</button>
+        </a>
+    </div>
+
+    <div id="map"></div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+
+    // extract service ID from URL
+    const serviceId = window.location.pathname.split("/").filter(Boolean).pop();
+
+    fetch(`/api/services/${serviceId}/`)
+        .then(res => res.json())
+        .then(service => {
+
+            document.getElementById("serviceName").textContent = service.name;
+            document.getElementById("serviceDescription").textContent = service.description;
+            document.getElementById("serviceCity").textContent = service.city;
+            document.getElementById("serviceAccess").textContent = service.accessibility;
+            document.getElementById("serviceOrg").textContent = service.organization;
+
+            // directions
+            document.getElementById("directionBtn").href =
+                `https://www.google.com/maps/dir/?api=1&destination=${service.latitude},${service.longitude}`;
+
+            // map
+            const map = L.map('map').setView([service.latitude, service.longitude], 14);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            L.marker([service.latitude, service.longitude])
+                .addTo(map)
+                .bindPopup(service.name)
+                .openPopup();
+        });
+
+</script>
+
+</body>
+</html>

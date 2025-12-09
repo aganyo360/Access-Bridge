@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AccessBridge - Services</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+        }
+
+        header {
+            padding: 15px 50px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c7be5;
+        }
+
+        nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .container {
+            width: 90%;
+            margin: 30px auto;
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .filters input, .filters select, .filters button {
+            padding: 10px;
+            font-size: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .service-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .service-card {
+            background: white;
+            flex: 1 1 300px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            transition: transform 0.2s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card h3 {
+            color: #2c7be5;
+        }
+
+        .service-card p {
+            margin: 5px 0;
+            opacity: 0.8;
+        }
+
+        .service-card a {
+            text-decoration: none;
+            color: #fff;
+            background: #2c7be5;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        #mapServices {
+            height: 400px;
+            width: 100%;
+            margin-top: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">AccessBridge</div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/organizations/">Organizations</a>
+        <a href="/login/">Login</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <h2>All Accessible Services</h2>
+
+    <div class="filters">
+        <input type="text" id="cityInput" placeholder="Filter by city">
+        <select id="accessInput">
+            <option value="">All Accessibility</option>
+            <option value="wheel">Wheelchair Access</option>
+            <option value="sign">Sign Language</option>
+            <option value="visual">Visual Assistance</option>
+        </select>
+        <button onclick="loadServices()">Search</button>
+    </div>
+
+    <div class="service-grid" id="serviceGrid"></div>
+
+    <div id="mapServices"></div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+    const map = L.map('mapServices').setView([-1.286389, 36.817223], 12);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    let markers = [];
+
+    function clearMarkers() {
+        markers.forEach(m => map.removeLayer(m));
+        markers = [];
+    }
+
+    function loadServices() {
+
+        const city = document.getElementById("cityInput").value;
+        const access = document.getElementById("accessInput").value;
+
+        let url = "/api/services/?";
+        if(city) url += `city=${city}&`;
+        if(access) url += `accessibility=${access}&`;
+
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+
+                clearMarkers();
+                document.getElementById("serviceGrid").innerHTML = "";
+
+                data.forEach(service => {
+
+                    // add card
+                    const card = `
+                        <div class="service-card">
+                            <h3>${service.name}</h3>
+                            <p><b>City:</b> ${service.city}</p>
+                            <p><b>Accessibility:</b> ${service.accessibility}</p>
+                            <a href="/service/${service.id}/">View Details</a>
+                        </div>
+                    `;
+                    document.getElementById("serviceGrid").innerHTML += card;
+
+                    // add marker
+                    const marker = L.marker([service.latitude, service.longitude]).addTo(map);
+                    marker.bindPopup(`<b>${service.name}</b><br>${service.accessibility}`);
+                    markers.push(marker);
+                });
+
+            });
+    }
+
+    loadServices(); // initial load
+</script>
+
+</body>
+</html>
