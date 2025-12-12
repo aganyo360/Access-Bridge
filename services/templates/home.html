@@ -1,188 +1,160 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accessible Kenya</title>
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+{% block content %}
 
-    <style>
+<style>
+/* All original CSS except header */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Segoe UI", sans-serif;
-        }
+body {
+    background: #f5f7fa;
+    color: #333;
+}
 
-        body {
-            background: #f5f7fa;
-            color: #333;
-        }
+/* HERO SECTION */
+.hero {
+    height: 70vh;
+    background: url('https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding-left: 60px;
+    position: relative;
+    margin-top: 80px; /* Space for sticky header */
+}
 
-        header {
-            padding: 20px 50px;
-            background: white;
-            box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 20;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.hero::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+}
 
-        .logo {
-            font-size: 26px;
-            font-weight: bold;
-            color: #2c7be5;
-        }
+.hero-text {
+    position: relative;
+    z-index: 5;
+    max-width: 500px;
+}
 
-        nav a {
-            margin-left: 20px;
-            text-decoration: none;
-            color: #444;
-            font-size: 16px;
-        }
+.hero-text h1 {
+    font-size: 50px;
+    font-weight: 800;
+    line-height: 1.2;
+}
 
-        /* HERO SECTION */
-        .hero {
-            height: 70vh;
-            background: url('https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover;
-            color: white;
-            display: flex;
-            align-items: center;
-            padding-left: 60px;
-            position: relative;
-        }
+.hero-text p {
+    margin-top: 15px;
+    font-size: 20px;
+    opacity: 0.9;
+}
 
-        .hero::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.45);
-        }
+.hero-buttons {
+    margin-top: 25px;
+}
 
-        .hero-text {
-            position: relative;
-            z-index: 5;
-            max-width: 500px;
-        }
+.btn {
+    display: inline-block;
+    padding: 12px 22px;
+    margin-right: 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 600;
+    color: white;
+    transition: 0.3s;
+}
 
-        .hero-text h1 {
-            font-size: 50px;
-            font-weight: 800;
-            line-height: 1.2;
-        }
+.btn-blue {
+    background: #2c7be5;
+}
 
-        .hero-text p {
-            margin-top: 15px;
-            font-size: 20px;
-            opacity: 0.9;
-        }
+.btn-blue:hover {
+    background: #165fc0;
+}
 
-        .hero-buttons {
-            margin-top: 25px;
-        }
+.btn-outline {
+    border: 2px solid white;
+}
 
-        .btn {
-            display: inline-block;
-            padding: 12px 22px;
-            margin-right: 10px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 17px;
-            font-weight: 600;
-            color: white;
-            transition: 0.3s;
-        }
+.btn-outline:hover {
+    background: white;
+    color: #333;
+}
 
-        .btn-blue {
-            background: #2c7be5;
-        }
+/* FEATURES SECTION */
+.features {
+    padding: 70px 50px;
+    text-align: center;
+}
 
-        .btn-blue:hover {
-            background: #165fc0;
-        }
+.features h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
 
-        .btn-outline {
-            border: 2px solid white;
-        }
+.feature-grid {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+}
 
-        .btn-outline:hover {
-            background: white;
-            color: #333;
-        }
+.feature-card {
+    background: white;
+    width: 280px;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+}
 
-        /* FEATURES SECTION */
-        .features {
-            padding: 70px 50px;
-            text-align: center;
-        }
+.feature-card img {
+    width: 60px;
+    opacity: 0.8;
+}
 
-        .features h2 {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 40px;
-        }
+.feature-card h3 {
+    margin-top: 15px;
+    font-size: 22px;
+}
 
-        .feature-grid {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-        }
+.feature-card p {
+    margin-top: 10px;
+    opacity: 0.7;
+}
 
-        .feature-card {
-            background: white;
-            width: 280px;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            text-align: center;
-        }
+/* MAP PREVIEW */
+.map-section {
+    padding: 50px 20px;
+    display: flex;
+    justify-content: center; /* center the map */
+}
 
-        .feature-card img {
-            width: 60px;
-            opacity: 0.8;
-        }
+.map-container {
+    width: 100%;
+    max-width: 1200px; /* container width */
+    height: 380px; /* fixed height */
+    border-radius: 14px;
+    overflow: hidden; /* contain map inside */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
 
-        .feature-card h3 {
-            margin-top: 15px;
-            font-size: 22px;
-        }
+#mapPreview {
+    width: 100%;
+    height: 100%; /* fill the container */
+}
 
-        .feature-card p {
-            margin-top: 10px;
-            opacity: 0.7;
-        }
 
-        /* MAP PREVIEW */
-        #mapPreview {
-            height: 380px;
-            width: 90%;
-            margin: 50px auto;
-            border-radius: 14px;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.15);
-        }
-
-    </style>
-</head>
-
-<body>
-
-<header>
-    <div class="logo">Accessible Kenya</div>
-
-    <nav>
-        <a href="/services/">Services</a>
-        <a href="/organizations/">Organizations</a>
-        <a href="/login/">Login</a>
-    </nav>
-</header>
+</style>
 
 <section class="hero">
     <div class="hero-text">
@@ -220,27 +192,38 @@
     </div>
 </section>
 
-<div id="mapPreview"></div>
+<section class="map-section">
+    <div class="map-container">
+        <div id="mapPreview"></div>
+    </div>
+</section>
+
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-
     const map = L.map('mapPreview').setView([-1.286389, 36.817223], 11);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
 
-    fetch("/api/services/")
-        .then(res => res.json())
-        .then(data => {
-            data.forEach(service => {
-                const marker = L.marker([service.latitude, service.longitude]).addTo(map);
-                marker.bindPopup(`<b>${service.name}</b><br>${service.city}`);
-            });
+let markers = [];
+
+fetch("/api/services/")
+    .then(res => res.json())
+    .then(data => {
+        data.forEach(service => {
+            const marker = L.marker([service.latitude, service.longitude]).addTo(map);
+            marker.bindPopup(`<b>${service.name}</b><br>${service.city}`);
+            markers.push(marker);
         });
+
+        // FIX: force Leaflet to recalc map size
+        setTimeout(() => {
+            map.invalidateSize();
+        }, 100);
+    });
 
 </script>
 
-</body>
-</html>
+{% endblock %}
