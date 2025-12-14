@@ -1,0 +1,29 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block subtitle %}Services{% endblock %}
+{% block dashboard_content %}
+<div class="header-row">
+    <h2>Services</h2>
+    <a class="btn" href="{% url 'dashboard:service-create' %}">Create Service</a>
+</div>
+
+<table class="table card">
+    <thead>
+        <tr><th>Name</th><th>Organization</th><th>City</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+        {% for s in services %}
+        <tr>
+            <td>{{ s.name }}</td>
+            <td>{{ s.organization.name }}</td>
+            <td>{{ s.city }}</td>
+            <td>
+                <a href="{% url 'dashboard:service-edit' s.pk %}">Edit</a> |
+                <a class="btn btn-danger" href="{% url 'dashboard:service-delete' s.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No services found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block subtitle %}Organizations{% endblock %}
+{% block dashboard_content %}
+<div class="header-row">
+    <h2>Organizations</h2>
+    <a class="btn" href="{% url 'dashboard:org-create' %}">Create Organization</a>
+</div>
+
+<table class="table card">
+    <thead>
+        <tr><th>Name</th><th>City</th><th>Created</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+        {% for org in organizations %}
+        <tr>
+            <td>{{ org.name }}</td>
+            <td>{{ org.city }}</td>
+            <td>{{ org.created_at|date:"Y-m-d" }}</td>
+            <td>
+                <a href="{% url 'dashboard:org-edit' org.pk %}">Edit</a> |
+                <a class="btn btn-danger" href="{% url 'dashboard:org-delete' org.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No organizations found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block subtitle %}Overview{% endblock %}
+{% block dashboard_content %}
+<div class="header-row">
+    <h2>Dashboard Overview</h2>
+</div>
+
+<div style="display:flex; gap:18px;">
+    <div class="card" style="flex:1; text-align:center;">
+        <h3>{{ org_count }}</h3>
+        <p>Organizations</p>
+    </div>
+    <div class="card" style="flex:1; text-align:center;">
+        <h3>{{ svc_count }}</h3>
+        <p>Services</p>
+    </div>
+</div>
+{% endblock %}

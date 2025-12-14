@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard — {% block subtitle %}{% endblock %}{% endblock %}
+
+{% block content %}
+<style>
+.dashboard-wrap { display:flex; gap:24px; width:90%; max-width:1200px; margin:30px auto; }
+.sidebar { width: 220px; background:white; border-radius:8px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+.sidebar a { display:block; color:#333; padding:10px 6px; text-decoration:none; border-radius:6px; margin-bottom:6px; }
+.sidebar a.active { background:#2c7be5; color:white; }
+.main { flex:1; }
+.header-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+.card { background:white; padding:16px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+.table { width:100%; border-collapse:collapse; margin-top:12px; }
+.table th, .table td { text-align:left; padding:8px; border-bottom:1px solid #eee; }
+.btn { padding:8px 12px; background:#2c7be5; color:white; border-radius:6px; text-decoration:none; }
+.btn-danger { background:#d9534f; }
+.form-row { margin-bottom:12px; }
+.form-row label { display:block; margin-bottom:6px; font-weight:600; }
+.form-row input, .form-row textarea, .form-row select { width:100%; padding:8px; border-radius:6px; border:1px solid #ccc; }
+</style>
+
+<div class="dashboard-wrap">
+    <aside class="sidebar">
+        <h3>Admin</h3>
+        <a href="{% url 'dashboard:index' %}">Overview</a>
+        <a href="{% url 'dashboard:org-list' %}">Organizations</a>
+        <a href="{% url 'dashboard:service-list' %}">Services</a>
+    </aside>
+
+    <div class="main">
+        {% block dashboard_content %}{% endblock %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block subtitle %}Service Form{% endblock %}
+{% block dashboard_content %}
+<div class="header-row">
+    <h2>{% if object %}Edit Service{% else %}Create Service{% endif %}</h2>
+    <a class="btn" href="{% url 'dashboard:service-list' %}">Back</a>
+</div>
+
+<form method="post" class="card">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+    <div class="form-row">
+        <label>{{ field.label }}</label>
+        {{ field }}
+        <div style="color:red;">{{ field.errors }}</div>
+    </div>
+    {% endfor %}
+    <button class="btn" type="submit">Save</button>
+</form>
+{% endblock %}
