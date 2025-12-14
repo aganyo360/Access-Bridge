@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import RegisterView, MeView, ProfileUpdateView, login_view, register_view, logout_view, dashboard
+from .views import RegisterView, MeView, ProfileUpdateView, login_view, register_view, logout_view, dashboard_redirect,user_dashboard, admin_dashboard
 from rest_framework.authtoken import views as drf_views
 
 
@@ -10,5 +10,8 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('register/',register_view, name='register'),
     path('logout/', logout_view, name='logout'),
-    path('dashboard/', dashboard, name='dashboard'),
+    path("dashboard/", dashboard_redirect, name="dashboard_redirect"),
+    path("dashboard/user/", user_dashboard, name="user_dashboard"),
+    path("dashboard/admin/", admin_dashboard, name="admin_dashboard"),
+
 ]

@@ -22,6 +22,7 @@ urlpatterns = [
     path('', include('accounts.urls')),
     path('', include('organizations.urls')),
     path('', include('services.urls')),
+    path('admin-dashboard/', include('dashboard.urls', namespace='dashboard'))
 
 
 ]

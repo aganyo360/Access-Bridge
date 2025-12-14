@@ -10,6 +10,7 @@ from rest_framework import status
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 
@@ -82,6 +83,21 @@ def logout_view(request):
     logout(request)
     return redirect('/login/')
 
+# @login_required
+# def dashboard(request):
+#     return render(request, "dashboard.html")
+
 @login_required
-def dashboard(request):
-    return render(request, "dashboard.html")
+def dashboard_redirect(request):
+    if request.user.is_staff:
+        return redirect("admin_dashboard")
+    return redirect("user_dashboard")
+
+@login_required
+def user_dashboard(request):
+    return render(request, "user_dashboard.html")
+
+
+@staff_member_required
+def admin_dashboard(request):
+    return render(request, "dashboard/index.html")

@@ -38,20 +38,26 @@
 <body>
 
 <header>
-    <div class="logo">AccessBridge</div>
+    <div class="logo"><a href="/" style="text-decoration: none; color: blue;">AccessBridge</a></div>
     <nav>
     <a href="/">Home</a>
     <a href="/services/">Services</a>
     <a href="/organizations/">Organizations</a>
 
     {% if user.is_authenticated %}
-        <a href="/dashboard/">Dashboard</a>
-        <a href="/profile/">Profile</a>
-        <a href="/logout/">Logout</a>
+        {% if user.is_staff %}
+                <a href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+                
+        {% else %}
+        <a href="{% url 'user_dashboard' %}">Dashboard</a>
+        <a href="/services/">Services</a>
+        {% endif %}
+    <a href="/logout/">Logout</a>
     {% else %}
-        <a href="/login/">Login</a>
-        <a href="/register/">Register</a>
+    <a href="/login/">Login</a>
+    <a href="/register/">Register</a>
     {% endif %}
+
 </nav>
 
 </header>
