@@ -17,7 +17,7 @@
             <td>{{ org.city }}</td>
             <td>{{ org.created_at|date:"Y-m-d" }}</td>
             <td>
-                <a href="{% url 'dashboard:org-edit' org.pk %}">Edit</a> |
+                <a href="{% url 'dashboard:org-edit' org.pk %}" class=" btn edit-btn">Edit</a> |
                 <a class="btn btn-danger" href="{% url 'dashboard:org-delete' org.pk %}">Delete</a>
             </td>
         </tr>
