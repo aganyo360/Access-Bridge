@@ -17,7 +17,7 @@
             <td>{{ s.organization.name }}</td>
             <td>{{ s.city }}</td>
             <td>
-                <a href="{% url 'dashboard:service-edit' s.pk %}">Edit</a> |
+                <a href="{% url 'dashboard:service-edit' s.pk %}" class=" btn edit-btn">Edit</a> |
                 <a class="btn btn-danger" href="{% url 'dashboard:service-delete' s.pk %}">Delete</a>
             </td>
         </tr>
