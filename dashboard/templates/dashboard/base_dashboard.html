@@ -5,7 +5,7 @@
 {% block content %}
 <style>
 .dashboard-wrap { display:flex; gap:24px; width:90%; max-width:1200px; margin:30px auto; }
-.sidebar { width: 220px; background:white; border-radius:8px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+.sidebar { width: 220px; background:white; border-radius:8px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.08); height: 100vh; }
 .sidebar a { display:block; color:#333; padding:10px 6px; text-decoration:none; border-radius:6px; margin-bottom:6px; }
 .sidebar a.active { background:#2c7be5; color:white; }
 .main { flex:1; }
@@ -16,16 +16,19 @@
 .btn { padding:8px 12px; background:#2c7be5; color:white; border-radius:6px; text-decoration:none; }
 .btn-danger { background:#d9534f; }
 .form-row { margin-bottom:12px; }
+.edit-btn{color: white; background-color: green; }
 .form-row label { display:block; margin-bottom:6px; font-weight:600; }
 .form-row input, .form-row textarea, .form-row select { width:100%; padding:8px; border-radius:6px; border:1px solid #ccc; }
 </style>
 
 <div class="dashboard-wrap">
     <aside class="sidebar">
-        <h3>Admin</h3>
-        <a href="{% url 'dashboard:index' %}">Overview</a>
-        <a href="{% url 'dashboard:org-list' %}">Organizations</a>
-        <a href="{% url 'dashboard:service-list' %}">Services</a>
+        <h3 style="color: blue; font-size: 32px;"><i class="fa fa-user"></i> Admin</h3>
+        
+        
+        <a href="{% url 'dashboard:index' %}" style="font-size: 18px; color: blue;"> <i class="fa-solid fa-grip"></i>Overview</a>
+        <a href="{% url 'dashboard:org-list' %}" style="font-size: 18px; color: blue;"><i class="fa fa-wheelchair"></i> Organizations</a>
+        <a href="{% url 'dashboard:service-list' %}" style="font-size: 18px; color: blue;"><i class="fa fa-heart"></i> Services</a>
     </aside>
 
     <div class="main">
