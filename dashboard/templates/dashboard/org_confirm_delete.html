@@ -10,7 +10,7 @@
     <p>Are you sure you want to delete "{{ object.name }}"?</p>
     <form method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Yes, delete</button>
+        <button type="submit" class="btn btn-danger">Yes, delete.</button>
         <a class="btn" href="{% url 'dashboard:org-list' %}">No, keep</a>
     </form>
 </div>
