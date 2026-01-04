@@ -92,6 +92,3 @@ class ServiceDeleteView(DeleteView):
     template_name = 'dashboard/service_confirm_delete.html'
     success_url = reverse_lazy('dashboard:service-list')
 
-
-def check(req):
-    return render(req, "")
