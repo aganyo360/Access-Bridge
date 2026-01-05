@@ -14,6 +14,7 @@ from .forms import OrganizationForm, ServiceForm
 
 # staff-only decorator
 def staff_required(user):
+    print(user)
     return user.is_active and user.is_staff
 
 @user_passes_test(staff_required)
