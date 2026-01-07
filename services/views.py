@@ -68,5 +68,6 @@ def organizations_page(request):
     return render(request, "organizations.html")
 
 def organizations_section(req):
+    print(req)
     pass
 
