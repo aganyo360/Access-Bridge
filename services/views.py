@@ -67,5 +67,3 @@ def services_page(request):
 def organizations_page(request):
     return render(request, "organizations.html")
 
-def func_tion():
-    pass
