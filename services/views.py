@@ -68,4 +68,4 @@ def organizations_page(request):
     return render(request, "organizations.html")
 
 def social():
-    pass
+
