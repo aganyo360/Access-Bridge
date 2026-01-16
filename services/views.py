@@ -65,5 +65,7 @@ def services_page(request):
 # ORGANIZATION PAGE SECTION
 
 def organizations_page(request):
+
+    
     return render(request, "organizations.html")
 
