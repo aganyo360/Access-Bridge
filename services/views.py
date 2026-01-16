@@ -62,7 +62,7 @@ def service_detail(request, id):
 def services_page(request):
     return render(request, "services.html")
 
-# ORGANIZATION PAGE
+# ORGANIZATION PAGE SECTION
 
 def organizations_page(request):
     return render(request, "organizations.html")
