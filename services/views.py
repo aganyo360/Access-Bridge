@@ -40,7 +40,6 @@ class ServiceDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_permissions(self):
         if self.request.method in ['PUT', 'PATCH', 'DELETE']:
-            
             return [permissions.IsAuthenticated()]
         return [permissions.AllowAny()]
 
