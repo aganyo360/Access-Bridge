@@ -54,7 +54,6 @@ def home(request):
 
 
 def map_view(request):
-    
     return render(request, 'services/map.html')
 
 def service_detail(request, id):
