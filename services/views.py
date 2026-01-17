@@ -36,6 +36,7 @@ class ServiceListCreateView(generics.ListCreateAPIView):
 
 class ServiceDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Service.objects.all()
+    
     serializer_class = ServiceSerializer
 
     def get_permissions(self):
