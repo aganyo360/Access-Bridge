@@ -45,7 +45,6 @@ class ServiceDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         if self.request.user != self.get_object().created_by:
-    
             raise PermissionError("Not allowed to update this service.")
         return super().perform_update(serializer)
 
