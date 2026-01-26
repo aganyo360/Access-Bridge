@@ -9,7 +9,6 @@ class ServiceSerializer(serializers.ModelSerializer):
             'latitude', 'longitude', 'accessibility', 'created_by', 'created_at'
 
     
-
         ]
         read_only_fields = ['created_by', 'created_at']
         
