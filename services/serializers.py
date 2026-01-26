@@ -8,6 +8,8 @@ class ServiceSerializer(serializers.ModelSerializer):
             'id', 'name', 'description', 'organization', 'city', 'address',
             'latitude', 'longitude', 'accessibility', 'created_by', 'created_at'
 
+            
+
         ]
         read_only_fields = ['created_by', 'created_at']
         
