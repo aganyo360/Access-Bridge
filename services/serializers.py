@@ -10,6 +10,7 @@ class ServiceSerializer(serializers.ModelSerializer):
         ]
         
         
+        
         read_only_fields = ['created_by', 'created_at']        
 
     def create(self, validated_data):
